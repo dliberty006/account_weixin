@@ -1,0 +1,63 @@
+<view class="title">
+  <view class="head_img fl">
+    <view>
+    <open-data class='image' type="userAvatarUrl"></open-data>
+    </view>
+    <view class='head_name'><open-data type="userNickName" lang="zh_CN"></open-data> </view>
+  </view>
+   <view class="head_img fr">
+    <button class='ji' bindtap='jiyibi'>记一笔</button>
+  </view>
+  <view>
+      <progress percent="20" show-info  class='head_pro' />
+  </view>
+</view>
+<view class='body_title'>
+    <view class='body_title_time'>{{year}}年{{month}}月</view>
+    <view class='body_tilte_acc'><text>支出:￥{{accountMoney}}</text><text>收入:￥{{incomeMoney}}</text></view>
+
+  <view class='fr_history'>
+       <picker mode="date" bindchange="changeDate" value="{{date}}" start="{{endYear-1}}-{{endMonth}}" end="{{endYear}}-{{endMonth}}" fields="month"> 
+          <image class="history_meng" src='../../img/icon/activity.png' ></image>         
+        </picker>  
+    </view>
+</view>
+<view class='body'>
+  <view class='body_desc'>
+    <block wx:for="{{descVoList}}" wx:key="time" wx:for-item="item">
+      <view class="body_list" >
+        <view class="body_list_title">
+          <view class='body_list_title_time fl'>{{item.time}}</view>
+          <view class='body_list_title_menu fr'>支出：{{item.accountMoney/100}} 收入：{{item.incomeMoney/100}}</view>
+        </view>
+        <view class='body_list_desc'>
+          <block wx:for="{{item.recordList}}" wx:key="id" wx:for-item="record" wx:for-index="reIdx">
+
+            <view class='body_list_desc_li'   >
+              <view bindtap='modifyAccount' data-recordid='{{record.id}}' data-parentindex='{{index}}' data-liindex='{{reIdx}}' bindlongpress='delMeng'>
+              <view class='fl '>
+                <view class="first_name {{record.cateType == '0' ? 'green':'red'}}">{{record.firstName}}</view>
+              </view>
+
+              <view class='fr'>
+                <view class='left'>
+                  <view>{{record.cateName}}</view>
+                  <view class='remarks'>{{record.accountRemarks}}</view>
+                </view>
+                <view class='right {{record.cateType == "0" ? "":"red"}}'><block wx:if="{{record.cateType == '0'}}">-</block>{{record.accountMoney/100}}</view>
+              </view>
+              </view>
+            </view>
+
+            
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class='meng {{showMeng == true ? "":"hide"}}' bindtouchstart='cancelMeng'></view>
+<view class='delete {{showMeng == true ? "":"hide"}}' data-recordid="{{recordId}}">
+  <view class="modify" bindtap='modifyAccount' data-recordid='{{recordId}}'>编辑</view>
+  <view bindtap='delRecord' data-parentindex="{{parentindex}}" data-liindex="{{liindex}}" data-recordid='{{recordId}}'>删除</view>
+</view>

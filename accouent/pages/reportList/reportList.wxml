@@ -1,0 +1,25 @@
+<view class='body_title'>
+    <view class='body_title_time'>{{year}}年{{month}}月</view>
+</view>
+<view class='body_desc'>
+  <view class='body_list_desc'>
+  <block wx:for="{{reportList}}" wx:key="id" wx:for-item="record" wx:for-index="reIdx">
+
+    <view class='body_list_desc_li'   >
+      <view bindtap='modifyAccount' >
+      <view class='fl '>
+        <view class="first_name {{record.cateType == '0' ? 'green':'red'}}">{{record.firstName}}</view>
+      </view>
+
+      <view class='fr'>
+        <view class='left'>
+          <view>{{record.cateName}}</view>
+          <view class='remarks'>{{record.accountRemarks}}</view>
+        </view>
+        <view class='right {{record.cateType == "0" ? "":"red"}}'><block wx:if="{{record.cateType == '0'}}">-</block>{{record.accountMoney/100}}</view>
+      </view>
+      </view>
+    </view>
+  </block>
+  </view>
+</view>

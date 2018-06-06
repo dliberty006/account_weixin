@@ -1,0 +1,36 @@
+<view class="body">
+  <view class="w">
+    <view class="time">
+      <view class='fl'>{{year}}年{{month}}月</view>
+      
+      <view class='fr'>
+         <picker mode="date" bindchange="activity_report_history" value="{{date}}" start="{{endYear-1}}-{{endMonth}}"   end="{{endYear}}-{{endMonth}}" fields="month"> 
+        <image class='fl_activity' src='../../img/icon/activity.png' ></image>
+        </picker>        
+      </view>
+      
+    </view>
+  <block wx:if="{{accountMoney > 0}}">
+    <view class='account'>
+      <view class="account_desc">
+        <view class="fl">消费</view>
+        <view class="fr">-{{accountMoney}}</view>
+      </view>
+      <view class="container">
+        <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+      </view>
+    </view>
+    </block>
+    <block wx:if="{{comeinMoney > 0}}">
+      <view class='income'>
+        <view class="account_desc">
+          <view class="fl">收入</view>
+          <view class="fr">{{comeinMoney}}</view>
+        </view>
+        <view class="container">
+          <canvas canvas-id="ringCanvas2" class="canvas" bindtouchstart="touchHandler2"></canvas>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

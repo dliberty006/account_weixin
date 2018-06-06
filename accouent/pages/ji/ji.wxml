@@ -1,0 +1,54 @@
+<view class='ji_title'>
+  <text class='ji_left {{cateType=="0" ? "bg_1" : ""}}' data-type='0' bindtap='changeType'>支出</text>
+  <text class='{{cateType=="1" ? "bg_1" : ""}}' data-type='1' bindtap='changeType'>收入</text>
+</view>
+<form bindsubmit='submit' report-submit='true'>
+  <view class='ji_money'>
+    <view class='ji_selected'>
+      <view class='w'>
+        <view class='fl ji_li bg_1'>{{accountCategory.cateName}}</view>
+        <view class='fr'>元</view>
+        <view class='fr'>
+          <input placeholder='请输入金额' value='{{accountMoneys}}' bindinput="changeMoney" type='digit' maxlength='10'></input>
+        </view>
+      </view>
+    </view>
+    <view class='ji_sel'>
+      <view class='w'>
+        <block wx:for="{{cateList}}" wx:key="id" wx:for-index="idx">
+          <view class='ji_li {{idx == selectLi ? "bg_1" : ""}}' data-index='{{idx}}' bindlongpress='delLi' bindtap='clickLi'>{{item.cateName}}          
+          </view>
+        </block>
+        <view class='ji_add_li'>
+          <input placeholder='添加类型' confirm-type='done' bindblur='addCateConfirm' placeholder-class='add_li_placeholder' bindinput='cateInput' value="{{cateName}}"></input>
+        </view>
+      </view>
+      <view class='tishi'>长按分类可以删除</view>
+    </view>
+  </view>
+  <view class='ji_time'>
+    <view class='w'>
+      <view class='ji_time_li'>
+        <picker mode="date" bindchange="changeDate" value="{{date}}" start="2018-01-01" end="{{currentDate}}" bindchange="bindDateChange">
+          <view class="picker">
+            <text class='ji_time_title'>时间</text> {{date}}
+          </view>
+        </picker>
+      </view>
+      <view class='ji_time_li ji_time_remark_parent'>
+        <text class='ji_time_title ji_time_remark'>备注</text>
+        <input bindinput='changeRemarks' maxlength='10' value='{{remarks}}' placeholder='备注，{{cateType=="0" ? "类如早餐" : "类如工资"}}'></input>
+        <text class='ji_time_num'>{{remarksCount}}/10</text>
+      </view>
+    </view>
+  </view>
+  <view class='ji_button'>
+    <view class='w'>
+      <button disabled='{{butDisable}}'  form-type='submit'>提交</button>
+    </view>
+  </view>
+</form>
+<view class='meng {{showMeng == true ? "":"hide"}}' bindtouchstart='cancelMeng'></view>
+<view class='delete {{showMeng == true ? "":"hide"}}'>
+  <view bindtap='delCate' data-index='{{delIndex}}'>删除"{{delName}}"</view>
+</view>
