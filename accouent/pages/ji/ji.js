@@ -99,7 +99,7 @@ Page({
       recordId = -1;
     }
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/category.htm',
+      url: getApp().globalData.host + '/liberty/account/category.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
@@ -175,7 +175,7 @@ Page({
       return;
     }
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/addCate.htm',
+      url: getApp().globalData.host + '/liberty/account/addCate.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
@@ -337,7 +337,7 @@ Page({
     var cateId = that.data.accountCategory.id;
     var cateType = that.data.cateType;
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/saveRecord.htm',
+      url: getApp().globalData.host + '/liberty/account/saveRecord.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
@@ -400,7 +400,7 @@ Page({
     var cateList = this.data.cateList;
     console.log(cateList[index]);
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/delCate.htm',
+      url: getApp().globalData.host + '/liberty/account/delCate.htm',
       data: {
         cateId: cateList[index].id
       },

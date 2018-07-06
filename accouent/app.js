@@ -10,7 +10,7 @@ App({
             if (res.code) {
               //发起网络请求
               wx.request({
-                url: 'https://www.72toy.com/liberty/weixin/getSessionKeyOropenid.htm',
+                url: getApp().globalData.host + '/liberty/weixin/getSessionKeyOropenid.htm',
                 dataType:'json',
                 data: {
                   code: res.code
@@ -22,7 +22,7 @@ App({
                 success: function (result) {
                   wx.setStorageSync('3rd_session', result.data.key_3rd_session);
                   wx.request({
-                    url: 'https://www.72toy.com/liberty/weixin/syncUser.htm',
+                    url: getApp().globalData.host + '/liberty/weixin/syncUser.htm',
                     dataType: 'json',
                     data: {
                       session: wx.getStorageSync('3rd_session')
@@ -46,6 +46,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    isBackInfo: false
+    isBackInfo: false,
+    host:'https://www.72toy.com'
   }
 })

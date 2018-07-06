@@ -8,8 +8,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    year:'',
-    month:'',
     accountMoney:'',
     comeinMoney:'',
     reportList:[],
@@ -17,7 +15,10 @@ Page({
     showActivityMeng:false,
     noAddCom:0,
     endMonth:"",
-    endYear:""
+    endYear:"",
+    endDay:'',
+    beginTime:'',
+    endTime:''
   },
 
   touchHandler: function (e) {
@@ -66,12 +67,16 @@ Page({
     if (!isBack){
       var date = new Date();
       var year = date.getFullYear();
-      var month = date.getMonth() + 1;      
+      var month = date.getMonth() + 1; 
+      month = month[1] ? month : '0' + month;
+      var day = date.getDay() + 1; 
+      day = day[1] ? day : '0' + day;    
       this.setData({
-        year: year,
-        month: month,
+        beginTime: year + "-" + month + "-01",
+        endTime:year+"-" + month + "-" + day,
         endMonth: month,
-        endYear:year
+        endYear:year,
+        endDay:day
         
       })
       wx.showLoading({
@@ -122,13 +127,13 @@ Page({
   loadAccount:function(){
     var that = this;
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/findReport.htm',
+      url: getApp().globalData.host + '/liberty/account/findRe.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
         cateType: '0',
-        year: that.data.year,
-        month:that.data.month
+        beginTime: that.data.beginTime,
+        endTime:that.data.endTime
       },
       header: {
         "Content-Type": "applciation/json"
@@ -190,7 +195,7 @@ Page({
   loadComein: function () {
     var that = this;
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/findReport.htm',
+      url: getApp().globalData.host + '/liberty/account/findRe.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
@@ -255,182 +260,219 @@ Page({
   },
   loadReportList : function(list,cateType,index) {
     var cateName = list[index].name;
-    var year = this.data.year;
-    var month = this.data.month;
+    var beginTime = this.data.beginTime;
+    var endTime = this.data.endTime;
     wx.navigateTo({
-      url: '/pages/reportList/reportList?cateName=' + cateName + '&cateType='+cateType + '&year=' + year + '&month=' + month
+      url: '/pages/reportList/reportList?cateName=' + cateName + '&cateType=' + cateType + '&beginTime=' + beginTime + '&endTime=' + endTime
     })
   },
-  /**
-   * 废弃的方法
-   */
-  activity_click : function(e){
-      this.setData({
-        showActivityMeng: true
-      })    
-  },
+ 
   /**
    * 选择查看历史的方法
    */
   activity_report_history : function(e){
     var that=this;
-
     var date = e.detail.value;
-    var year = date.substring(0, 4);
-    var month = date.substring(5, 7);
+    var endTime = this.data.endTime;
+    if (new Date(date).getTime() > new Date(endTime).getTime()) {
+      wx.showModal({
+        title: '提示',
+        content: '开始时间不能大于结束时间',
+        showCancel: false,
+        success: function (res) {
 
-  
+        }
+      })
+      return;
+    }
     this.setData({
-      year: year,
-      month: month, 
+      beginTime:date,
       showActivityMeng: false,
       noAddCom:0
-     
     })    
-    console.log("选择了："+year+"年"+month+"月");
-    
-   //修改消费的图
-    wx.request({
-      url: 'https://www.72toy.com/liberty/account/findReport.htm',
-      dataType: 'json',
-      data: {
-        session: wx.getStorageSync('3rd_session'),       
-        cateType: '0',
-        year: year,
-        month: month
-      },      
-      header: {
-        "Content-Type": "applciation/json"
-      },
-      method: "GET",
-      success: function (result) {
-        that.setData({
-          accountMoney: result.data.money / 100,
-          reportList: result.data.reportList
-        })       
-        var comeinLength = result.data.reportList.length;
-        if (comeinLength != 0) {
-          var windowWidth = 375;
-          try {
-            var res = wx.getSystemInfoSync();
-            windowWidth = res.windowWidth;
-          } catch (e) {
-            console.error('getSystemInfoSync failed!');
-          }
-          if (ringChart==null){
-            ringChart = new Charts({
-              animation: true,
-              canvasId: 'ringCanvas',
-              type: 'ring',
-              extra: {
-                ringWidth: 25,
-                pie: {
-                  offsetAngle: -45
-                }
-              },
-              series: result.data.reportList,
-              width: windowWidth,
-              height: 300,
-              disablePieStroke: true,
-              dataLabel: true,
-              legend: true,
-              background: '#f5f5f5',
-              padding: 50
-            });
-          }else{
-            ringChart.updateData({
-              series: result.data.reportList          
-              });
-          }
-        }else{
-          var noAddCom = that.data.noAddCom;
-          that.setData({
-            noAddCom: noAddCom + 1
-          })     
-        }
-        setTimeout(() => {
-          if (ringChart != null) {
-            ringChart.stopAnimation();
-          }
-        }, 500);
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
-    });
-    //修改收入的图
-    wx.request({
-      url: 'https://www.72toy.com/liberty/account/findReport.htm',
-      dataType: 'json',
-      data: {
-        session: wx.getStorageSync('3rd_session'),
-        cateType: '1',
-        year: that.data.year,
-        month: that.data.month
-      },
-      header: {
-        "Content-Type": "applciation/json"
-      },
-      method: "GET",
-      success: function (result) {
-        that.setData({
-          comeinMoney: result.data.money / 100,
-          comeinList: result.data.reportList
-        })
-
-        var windowWidth = 375;
-        try {
-          var res = wx.getSystemInfoSync();
-          windowWidth = res.windowWidth;
-        } catch (e) {
-          console.error('getSystemInfoSync failed!');
-        }
-        var comeinLength = result.data.reportList.length;
-        if (comeinLength != 0) {
-          if(ringChart2==null){
-            ringChart2 = new Charts({
-              animation: true,
-              canvasId: 'ringCanvas2',
-              type: 'ring',
-              extra: {
-                ringWidth: 25,
-                pie: {
-                  offsetAngle: -45
-                }
-              },
-              series: result.data.reportList,
-              width: windowWidth,
-              height: 300,
-              disablePieStroke: true,
-              dataLabel: true,
-              legend: true,
-              background: '#f5f5f5',
-              padding: 50
-            }); 
-          }else{
-            ringChart2.updateData({
-              series: result.data.reportList
-            });
-          }
-        } else {
-          var noAddCom = that.data.noAddCom;
-          that.setData({
-            noAddCom: noAddCom + 1
-          })
-        }
-        setTimeout(() => {
-          if (ringChart2 != null) {
-            ringChart2.stopAnimation();
-          }
-         
-        }, 500);
-      },
-      complete: function () {
-        wx.hideLoading();
-      }
-    }); 
-    this.isOrNotShowModal();
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    console.log("选择了：" + date);
+    this.loadUpdateData();
   },
+  /**
+  * 选择查看历史的方法
+  */
+  activity_report_history2: function (e) {
+    var that = this;
+    var date = e.detail.value;
+    var beginTime = this.data.beginTime;
+    if (new Date(date).getTime() < new Date(beginTime).getTime()) {
+      wx.showModal({
+        title: '提示',
+        content: '结束时间不能小于开始时间',
+        showCancel: false,
+        success: function (res) {
+
+        }
+      })
+      return;
+    }
+    this.setData({
+      endTime: date,
+      showActivityMeng: false,
+      noAddCom: 0
+    })
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    console.log("选择了：" + date);
+    this.loadUpdateData();
+  },
+
+ loadUpdateData:function(){
+   var that = this;
+   //修改消费的图
+   wx.request({
+     url: getApp().globalData.host + '/liberty/account/findRe.htm',
+     dataType: 'json',
+     data: {
+       session: wx.getStorageSync('3rd_session'),
+       cateType: '0',
+       beginTime: that.data.beginTime,
+       endTime: that.data.endTime
+     },
+     header: {
+       "Content-Type": "applciation/json"
+     },
+     method: "GET",
+     success: function (result) {
+       that.setData({
+         accountMoney: result.data.money / 100,
+         reportList: result.data.reportList
+       })
+       var comeinLength = result.data.reportList.length;
+       if (comeinLength != 0) {
+         var windowWidth = 375;
+         try {
+           var res = wx.getSystemInfoSync();
+           windowWidth = res.windowWidth;
+         } catch (e) {
+           console.error('getSystemInfoSync failed!');
+         }
+         if (ringChart == null) {
+           ringChart = new Charts({
+             animation: true,
+             canvasId: 'ringCanvas',
+             type: 'ring',
+             extra: {
+               ringWidth: 25,
+               pie: {
+                 offsetAngle: -45
+               }
+             },
+             series: result.data.reportList,
+             width: windowWidth,
+             height: 300,
+             disablePieStroke: true,
+             dataLabel: true,
+             legend: true,
+             background: '#f5f5f5',
+             padding: 50
+           });
+         } else {
+           ringChart.updateData({
+             series: result.data.reportList
+           });
+         }
+       } else {
+         var noAddCom = that.data.noAddCom;
+         that.setData({
+           noAddCom: noAddCom + 1
+         })
+       }
+       setTimeout(() => {
+         if (ringChart != null) {
+           ringChart.stopAnimation();
+         }
+       }, 500);
+     },
+     complete: function () {
+       wx.hideLoading();
+     }
+   });
+   //修改收入的图
+   wx.request({
+     url: getApp().globalData.host + '/liberty/account/findRe.htm',
+     dataType: 'json',
+     data: {
+       session: wx.getStorageSync('3rd_session'),
+       cateType: '1',
+       beginTime: that.data.beginTime,
+       endTime: that.data.endTime
+     },
+     header: {
+       "Content-Type": "applciation/json"
+     },
+     method: "GET",
+     success: function (result) {
+       that.setData({
+         comeinMoney: result.data.money / 100,
+         comeinList: result.data.reportList
+       })
+
+       var windowWidth = 375;
+       try {
+         var res = wx.getSystemInfoSync();
+         windowWidth = res.windowWidth;
+       } catch (e) {
+         console.error('getSystemInfoSync failed!');
+       }
+       var comeinLength = result.data.reportList.length;
+       if (comeinLength != 0) {
+         if (ringChart2 == null) {
+           ringChart2 = new Charts({
+             animation: true,
+             canvasId: 'ringCanvas2',
+             type: 'ring',
+             extra: {
+               ringWidth: 25,
+               pie: {
+                 offsetAngle: -45
+               }
+             },
+             series: result.data.reportList,
+             width: windowWidth,
+             height: 300,
+             disablePieStroke: true,
+             dataLabel: true,
+             legend: true,
+             background: '#f5f5f5',
+             padding: 50
+           });
+         } else {
+           ringChart2.updateData({
+             series: result.data.reportList
+           });
+         }
+       } else {
+         var noAddCom = that.data.noAddCom;
+         that.setData({
+           noAddCom: noAddCom + 1
+         })
+       }
+       setTimeout(() => {
+         if (ringChart2 != null) {
+           ringChart2.stopAnimation();
+         }
+
+       }, 500);
+     },
+     complete: function () {
+       wx.hideLoading();
+     }
+   });
+   this.isOrNotShowModal();
+ },
+
   /**
    * 是否提示为记账
    */

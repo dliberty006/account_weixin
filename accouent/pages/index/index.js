@@ -103,7 +103,7 @@ Page({
     var that = this;
     console.log(wx.getStorageSync('3rd_session'));
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/accountIndex.htm',
+      url: getApp().globalData.host + '/liberty/account/accountIndex.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
@@ -163,7 +163,7 @@ Page({
     var liindex = e.currentTarget.dataset.liindex;
     var recordid = e.currentTarget.dataset.recordid;
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/deleteAccount.htm',
+      url: getApp().globalData.host + '/liberty/account/deleteAccount.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),

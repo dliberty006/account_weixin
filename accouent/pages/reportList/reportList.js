@@ -6,8 +6,8 @@ Page({
    */
   data: {
     reportList:[],
-    month:"",
-    year:""
+    beginTime:"",
+    endTime:""
   },
 
   /**
@@ -16,17 +16,17 @@ Page({
   onLoad: function (options) {
     var cateName = options.cateName;
     var cateType = options.cateType;
-    var year = options.year;
-    var month = options.month;
+    var beginTime = options.beginTime;
+    var endTime = options.endTime;
     getApp().globalData.isBackInfo=true;
     
     wx.setNavigationBarTitle({
       title: cateName//页面标题为路由参数
     })
-    this.loadData(cateName, cateType, year, month);
+    this.loadData(cateName, cateType, beginTime, endTime);
     this.setData({
-      month: month,
-      year: year,
+      beginTime: beginTime,
+      endTime: endTime,
     })
   },
 
@@ -78,21 +78,21 @@ Page({
   onShareAppMessage: function () {
   
   },
-  loadData: function (cateName, cateType, year, month){
+  loadData: function (cateName, cateType, beginTime, endTime){
     wx.showLoading({
       title: '加载中',
       mask: true
     })
     var that = this;
     wx.request({
-      url: 'https://www.72toy.com/liberty/account/reportList.htm',
+      url: getApp().globalData.host + '/liberty/account/reportListDate.htm',
       dataType: 'json',
       data: {
         session: wx.getStorageSync('3rd_session'),
         cateType: cateType,
         cateName: cateName,
-        year:year,
-        month:month
+        beginTime: beginTime,
+        endTime: endTime
       },
       header: {
         "Content-Type": "applciation/json"

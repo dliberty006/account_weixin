@@ -1,5 +1,5 @@
 <view class='body_title'>
-    <view class='body_title_time'>{{year}}年{{month}}月</view>
+    <view class='body_title_time'>{{beginTime}}至{{endTime}}</view>
 </view>
 <view class='body_desc'>
   <view class='body_list_desc'>
