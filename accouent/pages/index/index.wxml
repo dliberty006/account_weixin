@@ -1,5 +1,4 @@
 <view class="title">
-  <view class='w'>
       <view class='waiyuan'>
         <view class='neiyuan'>
           <image class='wave' src='/img/more/wave.png'/>
@@ -11,7 +10,20 @@
         </view>
         <view class="yusuan">设置预算</view>
       </view>    
-  </view>
+      <view class="shuju"> 
+        <view class='fl li pl'>
+          <view>本月收入</view>
+          <view class="shuju_money">{{incomeMoney}}元</view>
+        </view>
+        <view class='fl li pl'>
+          <view>本月预算</view>
+          <view class="shuju_money">100元</view>
+        </view>
+        <view class='fl li'>
+          <view>本月支出</view>
+          <view class="shuju_money">{{accountMoney}}元</view>
+        </view>
+      </view>
 </view>
 <view class='body_title'>
   <view class='jiz'>
