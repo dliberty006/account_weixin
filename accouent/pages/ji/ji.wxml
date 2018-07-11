@@ -37,8 +37,8 @@
       </view>
       <view class='ji_time_li ji_time_remark_parent'>
         <text class='ji_time_title ji_time_remark'>备注</text>
-        <input bindinput='changeRemarks' maxlength='10' value='{{remarks}}' placeholder='备注，{{cateType=="0" ? "类如早餐" : "类如工资"}}'></input>
-        <text class='ji_time_num'>{{remarksCount}}/10</text>
+        <input bindinput='changeRemarks' maxlength='15' value='{{remarks}}' placeholder='备注，{{cateType=="0" ? "类如早餐" : "类如工资"}}'></input>
+        <text class='ji_time_num'>{{remarksCount}}/15</text>
       </view>
     </view>
   </view>

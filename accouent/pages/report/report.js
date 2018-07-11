@@ -68,9 +68,9 @@ Page({
       var date = new Date();
       var year = date.getFullYear();
       var month = date.getMonth() + 1; 
-      month = month[1] ? month : '0' + month;
-      var day = date.getDay() + 1; 
-      day = day[1] ? day : '0' + day;    
+      month = month.toString().length>1 ? month : '0' + month;
+      var day = date.getDate(); 
+      day = day.toString().length>1 ? day : '0' + day;    
       this.setData({
         beginTime: year + "-" + month + "-01",
         endTime:year+"-" + month + "-" + day,

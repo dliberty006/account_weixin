@@ -15,8 +15,10 @@
           {{endTime}}
           <view class="sanjiao"><image src='../../img/icon/activity.png'></image></view>
           </picker>
-          
         </view>
+      </view>
+      <view class='fr time-fl'>
+        
       </view>  
     </view>
   <block wx:if="{{accountMoney > 0}}">

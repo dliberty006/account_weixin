@@ -1,26 +1,26 @@
 <view class="title">
-  <view class="head_img fl">
-    <view>
-    <open-data class='image' type="userAvatarUrl"></open-data>
-    </view>
-    <view class='head_name'><open-data type="userNickName" lang="zh_CN"></open-data> </view>
-  </view>
-   <view class="head_img fr">
-    <button class='ji' bindtap='jiyibi'>记一笔</button>
-  </view>
-  <view>
-      <progress percent="20" show-info  class='head_pro' />
+  <view class='w'>
+      <view class='waiyuan'>
+        <view class='neiyuan'>
+          <image class='wave' src='/img/more/wave.png'/>
+          <image class='wave1' src='/img/more/wave.png'/>
+        </view>
+        <view class='yusuanshengyu'>
+          <view class='shengyu'>预算剩余</view>
+          <view class='shengyumoney'>1000</view>
+        </view>
+        <view class="yusuan">设置预算</view>
+      </view>    
   </view>
 </view>
 <view class='body_title'>
-    <view class='body_title_time'>{{year}}年{{month}}月</view>
-    <view class='body_tilte_acc'><text>支出:￥{{accountMoney}}</text><text>收入:￥{{incomeMoney}}</text></view>
-
-  <view class='fr_history'>
-       <picker mode="date" bindchange="changeDate" value="{{date}}" start="{{endYear-1}}-{{endMonth}}" end="{{endYear}}-{{endMonth}}" fields="month"> 
-          <image class="history_meng" src='../../img/icon/activity.png' ></image>         
-        </picker>  
-    </view>
+  <view class='jiz'>
+      <view class="confirm-btn" bindtap='jiyibi'>
+            <text >记一笔</text>
+      </view>
+  </view>
+   <!-- <view class='body_title_time'>{{year}}年{{month}}月</view>
+    <view class='body_tilte_acc'><text>支出:￥{{accountMoney}}</text><text>收入:￥{{incomeMoney}}</text></view>--> 
 </view>
 <view class='body'>
   <view class='body_desc'>
@@ -60,4 +60,7 @@
 <view class='delete {{showMeng == true ? "":"hide"}}' data-recordid="{{recordId}}">
   <view class="modify" bindtap='modifyAccount' data-recordid='{{recordId}}'>编辑</view>
   <view bindtap='delRecord' data-parentindex="{{parentindex}}" data-liindex="{{liindex}}" data-recordid='{{recordId}}'>删除</view>
+</view>
+<view>
+    
 </view>
