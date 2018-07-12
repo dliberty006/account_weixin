@@ -1,6 +1,6 @@
 <view class="title">
       <view class='waiyuan'>
-        <view class='neiyuan'>
+        <view class='neiyuan' style='height:{{height}};top:{{top}}'>
           <image class='wave' src='/img/more/wave.png'/>
           <image class='wave1' src='/img/more/wave.png'/>
         </view>
@@ -12,17 +12,23 @@
       </view>    
       <view class="shuju"> 
         <view class='fl li pl'>
-          <view>本月收入</view>
+          <view>{{month}}月收入</view>
           <view class="shuju_money">{{incomeMoney}}元</view>
         </view>
         <view class='fl li pl'>
-          <view>本月预算</view>
-          <view class="shuju_money">100元</view>
+          <view>{{month}}月预算</view>
+          <view class="shuju_money">{{budgetMoney}}元</view>
         </view>
         <view class='fl li'>
-          <view>本月支出</view>
+          <view>{{month}}月支出</view>
           <view class="shuju_money">{{accountMoney}}元</view>
         </view>
+      </view>
+      <view class='history'>
+        <picker mode="date" bindchange="changeDate" value="{{date}}" start="{{endYear-1}}-{              {endMonth}}" end="{{endYear}}-{{endMonth}}" fields="month">
+        <image class='fl' src='/img/icon/history.png'></image>
+        <view class='zi fl'>历史记录</view>
+        </picker>
       </view>
 </view>
 <view class='body_title'>

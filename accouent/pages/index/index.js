@@ -17,7 +17,11 @@ Page({
     month:"",
     endMonth:"",
     year:"",
-    endYear:""
+    endYear:"",
+    height:'100%',
+    top:'0%',
+    budgetMoney:'--',
+    availableMoney:'--'
   },
 
   /**
@@ -120,7 +124,8 @@ Page({
         that.setData({
           accountMoney: result.data.accountMoney/100,
           incomeMoney:result.data.incomeMoney/100,
-          descVoList: result.data.descVoList
+          descVoList: result.data.descVoList,
+          budgetMoney: result.data.budgetMoney
         });
         wx.hideLoading();
       }
