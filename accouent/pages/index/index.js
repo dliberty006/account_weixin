@@ -21,7 +21,10 @@ Page({
     height:'100%',
     top:'0%',
     budgetMoney:'--',
-    availableMoney:'--'
+    availableMoney:'--',
+    hiddenmodalput:true,
+    setBudgetMoney:'',
+    backUrl: 'http://www.dliberty.com/images/ZG9jX2ZpbGUxNTMxNDcwNjQwNDgx.jpg'
   },
 
   /**
@@ -93,8 +96,8 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '记账小本本',
-      path: '/page/user?id=123'
+      title: '记账小本本儿记账小本本儿记账小本本儿记账小本本儿记账小本本儿',
+      path: '/pages/start/start'
     }
   },
   jiyibi:function(){
@@ -125,10 +128,38 @@ Page({
           accountMoney: result.data.accountMoney/100,
           incomeMoney:result.data.incomeMoney/100,
           descVoList: result.data.descVoList,
-          budgetMoney: result.data.budgetMoney
+          backUrl:result.data.backUrl
         });
+        that.calcyusuan(result.data.budgetMoney, result.data.accountMoney / 100);
         wx.hideLoading();
       }
+    })
+  },
+  calcyusuan: function (budgetMoney, accountMoney){
+    var that = this;
+    that.setData({
+      budgetMoney: '--',
+      availableMoney: '--',
+      height: '100%',
+      top:'0'
+    })
+    if (isNaN(budgetMoney)) {
+      return;
+    }
+    budgetMoney = budgetMoney/100;
+    
+    var availableMoney = (parseFloat(budgetMoney) - parseFloat(accountMoney)).toFixed(2);
+    if (availableMoney < 0 ) {
+      availableMoney = 0;
+    }
+    var bilei = (availableMoney / parseFloat(budgetMoney)).toFixed(2);
+    var height = bilei*100 + '%';
+    var top = (1-bilei)*100 + '%';
+    that.setData({
+      budgetMoney: budgetMoney,
+      availableMoney: availableMoney,
+      height:height,
+      top:top
     })
   },
   modifyAccount:function(e){
@@ -156,6 +187,11 @@ Page({
     this.setData({
       recordId: "",
       showMeng: false
+    })
+  },
+  cancelSetBudget:function(e){
+    this.setData({
+      showSetBudget: false
     })
   },
   delRecord:function(e){
@@ -207,6 +243,59 @@ Page({
       month:month
     });
     this.loadData();
+  },
+  setbudget:function(e) {
+    this.setData({
+      hiddenmodalput: false
+    })
+  },
+  cancelSetbudget:function(e) {
+    this.setData({
+      hiddenmodalput: true
+    })
+  },
+  changeMoney:function(e) {
+    this.setData({
+      setBudgetMoney: e.detail.value
+    })
+  },
+  setbudgetConfirm:function(e) {
+    var that = this;
+    var setBudgetMoney = that.data.setBudgetMoney;
+    if (setBudgetMoney == '' || setBudgetMoney == undefined) {
+      return;
+    }
+    wx.request({
+      url: getApp().globalData.host + '/liberty/account/setBudget.htm',
+      dataType: 'json',
+      data: {
+        session: wx.getStorageSync('3rd_session'),
+        money: setBudgetMoney,
+        year: that.data.endYear,
+        month: that.data.endMonth
+      },
+      header: {
+        "Content-Type": "applciation/json"
+      },
+      method: "GET",
+      success: function (result) {
+        if (result.data.code == '0') {
+          that.setData({
+            hiddenmodalput: true
+          })
+          that.loadData();
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: result.data.message,
+            showCancel: false,
+            success: function (res) {
+            }
+          })
+        }
+
+      }
+    })
   }
 
 })

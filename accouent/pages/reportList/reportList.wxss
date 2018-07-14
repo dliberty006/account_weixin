@@ -49,6 +49,10 @@
   height: 50rpx;
   line-height: 50rpx;
 }
+.body_desc .body_list_desc .fr .left view text {
+  color: #aaa;
+  margin-left: 5rpx;
+}
 .body_desc .body_list_desc .fr .right{
   font-size: 35rpx;
   font-weight: 600;

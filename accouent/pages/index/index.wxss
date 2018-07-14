@@ -1,11 +1,10 @@
 .title {
   width: 100%;
   height: 400rpx;
-  background-color: #69c3aa;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 9999;  
 }
 
 .title .head_img {
@@ -159,6 +158,7 @@
   line-height: 50rpx;
 }
 
+
 .body_desc .body_list_desc .fr .right {
   font-size: 35rpx;
   font-weight: 600;
@@ -288,11 +288,14 @@ body {
 .waiyuan .yusuanshengyu {
   position: absolute;
   top: 40rpx;
-  left: 60rpx;
+  left: 0;
   text-align: center;
   color: #fff;
   height: 40rpx;
   line-height: 40rpx;
+  margin:0 auto;
+  width:100%;
+
 }
 
 .waiyuan .yusuanshengyu .shengyu {
@@ -398,4 +401,10 @@ body {
 
 .shuju .pl {
   border-right: 1px solid #fff;
+}
+
+
+.setbudget {
+  position:relative;
+  z-index:99999;
 }

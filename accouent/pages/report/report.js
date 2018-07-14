@@ -200,8 +200,8 @@ Page({
       data: {
         session: wx.getStorageSync('3rd_session'),
         cateType: '1',
-        year: that.data.year,
-        month: that.data.month
+        beginTime: that.data.beginTime,
+        endTime: that.data.endTime
       },
       header: {
         "Content-Type": "applciation/json"

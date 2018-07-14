@@ -1,4 +1,4 @@
-<view class="title">
+<view class="title" style='background: url({{backUrl}}) no-repeat;background-size:100% 100%;'>
       <view class='waiyuan'>
         <view class='neiyuan' style='height:{{height}};top:{{top}}'>
           <image class='wave' src='/img/more/wave.png'/>
@@ -6,9 +6,9 @@
         </view>
         <view class='yusuanshengyu'>
           <view class='shengyu'>预算剩余</view>
-          <view class='shengyumoney'>1000</view>
+          <view class='shengyumoney'>{{availableMoney}}</view>
         </view>
-        <view class="yusuan">设置预算</view>
+        <view class="yusuan" wx:if="{{endMonth == month}}" bindtap='setbudget'>设置预算</view>
       </view>    
       <view class="shuju"> 
         <view class='fl li pl'>
@@ -79,6 +79,7 @@
   <view class="modify" bindtap='modifyAccount' data-recordid='{{recordId}}'>编辑</view>
   <view bindtap='delRecord' data-parentindex="{{parentindex}}" data-liindex="{{liindex}}" data-recordid='{{recordId}}'>删除</view>
 </view>
-<view>
-    
-</view>
+
+<modal hidden="{{hiddenmodalput}}"  title="设置预算金额" confirm-text="提交" class='setbudget' cancel-text="取消" bindcancel="cancelSetbudget" bindconfirm="setbudgetConfirm">
+    <input type='number'placeholder="请输入预算金额" maxlength='7' bindinput="changeMoney" value='{{budgetMoney == "--" ? "" : budgetMoney}}'/>
+</modal>

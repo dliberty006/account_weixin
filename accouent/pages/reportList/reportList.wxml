@@ -13,7 +13,7 @@
 
       <view class='fr'>
         <view class='left'>
-          <view>{{record.cateName}}</view>
+          <view>{{record.cateName}}<text>({{record.createTime}})</text></view>
           <view class='remarks'>{{record.accountRemarks}}</view>
         </view>
         <view class='right {{record.cateType == "0" ? "":"red"}}'><block wx:if="{{record.cateType == '0'}}">-</block>{{record.accountMoney/100}}</view>
