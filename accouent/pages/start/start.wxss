@@ -187,3 +187,16 @@ page{
   padding: 30rpx;
   text-align: center;
 }
+.share{
+ position:absolute;
+ top:600rpx;
+ left:40%;
+ background:#000;
+ height:60rpx;
+ opacity:0.6;
+ color:#fff;
+ line-height:60rpx;
+ font-size: 24rpx;
+ width: 20%;
+
+}

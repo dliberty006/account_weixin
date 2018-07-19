@@ -21,6 +21,7 @@
         <view class="confirm-btn" bindtap='goToIndex'>
           <text >开始记账</text>
         </view>
+        <button open-type="share" class='share'>分享好友</button>
         
       </view>
     </view>

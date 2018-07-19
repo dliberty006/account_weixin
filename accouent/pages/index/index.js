@@ -96,7 +96,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '记账小本本儿记账小本本儿记账小本本儿记账小本本儿记账小本本儿',
+      title: '让记账成为一种习惯，快来和我一起记账吧',
       path: '/pages/start/start'
     }
   },

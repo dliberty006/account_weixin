@@ -18,6 +18,11 @@ Page({
   onShow: function () {
 
   },
+  onShareAppMessage: function () {
+    return {
+      title: '让记账成为一种习惯，快来和我一起记账吧'
+    }
+  },
   onReady: function () {
     var that = this;
     setTimeout(function () {

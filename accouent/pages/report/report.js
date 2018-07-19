@@ -121,7 +121,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+    return {
+      title: '让记账成为一种习惯，快来和我一起记账吧',
+      path: '/pages/start/start'
+    }
   },
   //加载消费的图
   loadAccount:function(){
