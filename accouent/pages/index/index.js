@@ -106,9 +106,7 @@ Page({
     })
   },
   loadData:function(){
-    console.log("加载数据");
     var that = this;
-    console.log(wx.getStorageSync('3rd_session'));
     wx.request({
       url: getApp().globalData.host + '/liberty/account/accountIndex.htm',
       dataType: 'json',
@@ -122,8 +120,6 @@ Page({
       },
       method: "GET",
       success: function (result) {
-        console.log("数据加载完成");
-        console.log(result.data.descVoList);
         that.setData({
           accountMoney: result.data.accountMoney/100,
           incomeMoney:result.data.incomeMoney/100,
@@ -234,7 +230,6 @@ Page({
    * 选择时间
    */
   changeDate: function(e){
-    console.log(e.detail.value);
     var date = e.detail.value;
     var year = date.substring(0, 4);
     var month = date.substring(5, 7);
