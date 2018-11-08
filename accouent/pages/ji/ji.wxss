@@ -5,7 +5,7 @@
 .bg_2{
   color: #fff;
   background: #22a484;
-  border: 1rpx solid #22a484 !important;
+  border: 1px solid #22a484 !important;
 }
 .w{
   width: 90%;
@@ -47,7 +47,7 @@
 .ji_li{
   float: left;
   border: 1px solid #000;
-  border-radius: 20rpx;
+  border-radius: 30rpx;
   width:17%;
   height: 45rpx;
   line-height: 45rpx;
@@ -125,7 +125,8 @@
   background-color: #22a484;
   color: #fff;
   border-radius:40rpx;
-  letter-spacing:10rpx
+  letter-spacing:10rpx;
+  font-size: 40rpx;
 }
 
 .delImage{
@@ -153,7 +154,6 @@
   left: 15%;
   border-radius: 10rpx;
   z-index: 99999;
-  
 }
 .delete view{
   height: 75rpx;
@@ -170,4 +170,53 @@
   font-size:24rpx;
   padding:10rpx 0 0 45rpx;
   color:#9e9e9e;
+}
+
+.finish{
+  height: 470rpx;
+  width: 435rpx;
+  background: #fff;
+  color: #000;
+  position: fixed;
+  top: 30%;
+  left: 157.5rpx;
+  border-radius: 20rpx;
+  z-index: 99999;
+}
+.finish .finish_logo{
+  width: 147rpx;
+  height: 147rpx;
+  position: absolute;
+  top: 85rpx;
+  left: 144rpx;
+}
+.finish .finish_zi{
+  position: absolute;
+  top: 275rpx;
+  left: 135rpx;
+  font-size: 40rpx;
+}
+.finish .finish_logo image{
+  width: 100%;
+  height: 100%;
+}
+.finish .finish_footer{
+  height: 96rpx;
+  line-height: 96rpx;
+  width: 100%;
+  border-top: 1rpx solid #ddd;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.finish .finish_footer view{
+  text-align: center;
+  width: 49.5%;
+  color: #28a482;
+}
+.finish .finish_footer .fl{
+  border-right: 1rpx solid #ddd;
+}
+.blank{
+  margin-bottom: 84rpx;
 }

@@ -24,7 +24,7 @@ Page({
   touchHandler: function (e) {
     var index = ringChart.getCurrentDataIndex(e);
     var list = this.data.reportList;
-    if (index == -1 && list.length == 1) {
+    if (index == -1 || list.length == 1) {
       return;
     }
     var cateType = '0';
@@ -33,7 +33,7 @@ Page({
   touchHandler2: function (e) {
     var index = ringChart2.getCurrentDataIndex(e);
     var list = this.data.comeinList;
-    if (index == -1 && list.length == 1) {
+    if (index == -1 || list.length == 1) {
       return;
     }
     
@@ -84,7 +84,6 @@ Page({
         mask: true
       })
       this.loadAccount();
-      this.loadComein();
       this.isOrNotShowModal();
     }
   },
@@ -190,6 +189,7 @@ Page({
        
       },
       complete:function(){
+        that.loadComein();
         wx.hideLoading();
       }
     })

@@ -1,3 +1,4 @@
+<view class='blank'>
 <view class='ji_title'>
   <view class='ji_left ' data-type='0' bindtap='changeType'><view class='ji_left_con ml132 {{cateType=="0" ? "bg_1" : ""}}'>支出</view></view>
   <view class=' ji_left ' data-type='1' bindtap='changeType'><view class='ji_left_con ml80 {{cateType=="1" ? "bg_1" : ""}}'>收入</view></view>
@@ -6,7 +7,7 @@
   <view class='ji_money'>
     <view class='ji_sel'>
       <view class='w'>
-        <view style='margin-right: -15rpx;overflow:hidden;'>
+        <view style='margin-right: -15rpx;'>
         <block wx:for="{{cateList}}" wx:key="id" wx:for-index="idx">
           <view class='ji_li {{idx == selectLi ? "bg_2" : ""}}' data-index='{{idx}}' bindlongpress='delLi' bindtap='clickLi'>{{item.cateName}}          
           </view>
@@ -55,7 +56,19 @@
     </view>
   </view>
 </form>
+</view>
+
+<ad unit-id="adunit-aa0b3455e967b329"></ad>
+
 <view class='meng {{showMeng == true ? "":"hide"}}' bindtouchstart='cancelMeng'></view>
-<view class='delete {{showMeng == true ? "":"hide"}}'>
+<view class='delete {{showDelete == true ? "":"hide"}}'>
   <view bindtap='delCate' data-index='{{delIndex}}'>删除"{{delName}}"</view>
+</view>
+<view class='finish {{showFinish == true ? "":"hide"}}'>
+  <view class='finish_logo'><image src='../../img/icon/finish.png'></image></view>
+  <view class="finish_zi">提交完成！</view>
+  <view class='finish_footer'>
+    <view class='fl' bindtap='againRecord'>再记一笔</view>
+    <view class='fr' bindtap='finishRecord'>完成记账</view>
+  </view>
 </view>

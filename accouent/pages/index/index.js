@@ -8,7 +8,7 @@ Page({
     
     accountMoney:0,
     incomeMoney:0,
-    descVoList:[],
+    descVoList:[],  
     delIndex:0,
     recordId:'',
     showMeng:false,
@@ -23,7 +23,9 @@ Page({
     budgetMoney:'--',
     availableMoney:'--',
     hiddenmodalput:true,
+    hiddenModal:true,
     setBudgetMoney:'',
+    email:'',
     backUrl: 'http://www.dliberty.com/images/ZG9jX2ZpbGUxNTMxNDcwNjQwNDgx.jpg'
   },
 
@@ -124,7 +126,8 @@ Page({
           accountMoney: result.data.accountMoney/100,
           incomeMoney:result.data.incomeMoney/100,
           descVoList: result.data.descVoList,
-          backUrl:result.data.backUrl
+          backUrl:result.data.backUrl,
+          email:result.data.email
         });
         that.calcyusuan(result.data.budgetMoney, result.data.accountMoney / 100);
         wx.hideLoading();
@@ -291,6 +294,73 @@ Page({
 
       }
     })
+  },
+  setEmail:function(){
+    this.setData({
+      hiddenModal:false
+    })
+  },
+  cancelMask:function(){
+    this.setData({
+      hiddenModal: true
+    })
+  },
+  changeEmail: function (e) {
+    this.setData({
+      email: e.detail.value
+    })
+  },
+  submitEmail:function(){
+    let that = this;
+    let email = this.data.email;
+    let reg = new RegExp("^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$");
+    if (reg.test(email)){
+      wx.request({
+        url: getApp().globalData.host + '/liberty/weixin/modifyEmail.htm',
+        dataType: 'json',
+        data: {
+          'session': wx.getStorageSync('3rd_session'),
+          'email': email
+        },
+        header: {
+          "Content-Type": "applciation/json"
+        },
+        method: "GET",
+        success: function (result) {
+          if (result.data.code == '1') {
+            wx.showModal({
+              title: '提示',
+              content: result.data.message,
+              showCancel: false,
+              success: function (res) {
+              }
+            })
+            
+          } else {
+            that.setData({
+              hiddenModal: true
+            })
+            wx.showModal({
+              title: '提示',
+              content: '设置成功',
+              showCancel: false,
+              success: function (res) {
+              }
+            })
+          }
+
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '请输入正确格式的邮箱',
+        showCancel: false,
+        success: function (res) {
+        }
+      })
+    }
+    
   }
 
 })

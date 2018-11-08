@@ -47,6 +47,6 @@ App({
   globalData: {
     userInfo: null,
     isBackInfo: false,
-    host:'https://www.72toy.com'
+    host:'https://www.dliberty.com'
   }
 })

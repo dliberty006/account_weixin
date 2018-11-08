@@ -2,6 +2,7 @@
     <view class='body_title_time'>{{beginTime}}至{{endTime}}</view>
 </view>
 <view class='body_desc'>
+  <ad unit-id="adunit-cb1476ba2893dc2c"></ad>
   <view class='body_list_desc'>
   <block wx:for="{{reportList}}" wx:key="id" wx:for-item="record" wx:for-index="reIdx">
 

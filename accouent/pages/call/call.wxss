@@ -4,8 +4,8 @@
   font-weight: 500;
   line-height: 85rpx;
   height: 85rpx;
-  background: #4fedd4;
-  color: black;
+  background: #22a484;
+  color: #fff;
   text-align: center;
   border-radius: 100rpx;
   margin: 40rpx 20%;

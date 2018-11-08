@@ -21,6 +21,8 @@ Page({
     formId: '',
     butDisable:false,
     showMeng:false,
+    showDelete:false,
+    showFinish:false,
     delIndex:-1,
     delName:""
   },
@@ -239,6 +241,7 @@ Page({
     var cate = this.data.cateList[index];
     this.setData({
       showMeng: true,
+      showDelete:true,
       delIndex:index,
       delName: cate.cateName
     }); 
@@ -247,6 +250,8 @@ Page({
     this.setData({
       delIndex: -1,
       showMeng: false,
+      showDelete:false,
+      showFinish:false,
       delName:""
     })
   },
@@ -264,6 +269,26 @@ Page({
   changeDate: function (e) {
     this.setData({
       date: e.detail.value
+    })
+  },
+  showFinish:function(e){
+    this.setData({
+      showMeng:true,
+      showFinish:true
+    })
+  },
+  hideFinish: function (e) {
+    this.setData({
+      showMeng: false,
+      showFinish: false
+    })
+  },
+  againRecord:function(){
+    this.hideFinish();
+  },
+  finishRecord: function () {
+    wx.switchTab({
+      url: '/pages/index/index',
     })
   },
   submit: function (e) {
@@ -369,11 +394,6 @@ Page({
           })
           return;
         } else {
-            wx.showToast({
-            title: '提交成功',
-            icon: 'success',
-            duration: 2000
-          });
           that.setData({
             date: that.data.currentDate,
             accountCategory: that.data.cateList[0],
@@ -385,6 +405,7 @@ Page({
             formId: '',
             recordId:''
           })
+          that.showFinish();
         }
 
 
@@ -428,6 +449,7 @@ Page({
           accountCategory: accountCategory,
           delIndex:-1,
           showMeng:false,
+          showDelete:false,
           delName:"",
           selectLi: 0,
           accountCategory: cate
